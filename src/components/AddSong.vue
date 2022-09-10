@@ -1,13 +1,19 @@
 <template>
-  <div class="add-song">
+<div class="contanier">
+  <div class="row">
+    <div class="col-lg-12">
+<div class="add-song">
     <button v-if="!showForm" @click="showForm = true">Add Songs</button>
     <form v-if="showForm" @submit.prevent="handleSubmit">
       <h4>Add a New Song</h4>
       <input type="text" placeholder="Song title" required v-model="title">
       <input type="text" placeholder="Artist" required v-model="artist">
-      <button>Add</button>
+      <button >Add</button>
     </form>
   </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>

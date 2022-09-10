@@ -12,7 +12,7 @@ const useCollection = (collection) => {
     isPending.value = true
 
     try {
-      const res = await projectFirestore.collection(collection).add(doc)
+     const res = await projectFirestore.collection(collection).add(doc)
       isPending.value = false
       return res
     }
@@ -26,5 +26,5 @@ const useCollection = (collection) => {
   return { error, addDoc, isPending }
 
 }
-
+  
 export default useCollection

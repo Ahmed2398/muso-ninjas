@@ -1,9 +1,14 @@
 <template>
-  <div class="error" v-if="error">{{ error }}</div>
-  <div v-if="playlist" class="playlist-details">
-
-    <!-- playlist information -->
-    <div class="playlist-info">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 m-0">
+ <div class="error" v-if="error">{{ error }}</div>
+    </div>
+      
+    <div class="col-lg-6 col-sm-12 m-0">
+       <!-- playlist information -->
+       <div v-if="playlist" class="playlist-details">
+ <div class="playlist-info">
       <div class="cover">
         <img :src="playlist.coverUrl">
       </div>
@@ -12,30 +17,27 @@
       <p class="description">{{ playlist.description }}</p>
       <button v-if="ownership" @click="handleDelete">Delete Playlist</button>
     </div>
-
-    <!-- song list -->
-    <div class="song-list">
+    </div>
+    </div>
+    <div class="col-lg-6 col-sm-12">
+          <!-- song list -->
+       <div class="song-list">
       <div v-if="!playlist.songs.length">No songs have been added to this playlist yet.</div>
       <div v-for="song in playlist.songs" :key="song.id" class="single-song">
         <div class="details">
           <h3>{{ song.title }}</h3>
           <p>{{ song.artist }}</p>
         </div>
-        <button v-if="ownership" @click="handleClick(song.id)">delete</button>
+        <button v-if="ownership" @click="handelClick(song.id)">delete</button>
       </div>
       <AddSong :playlist="playlist" />
     </div>
-    
+    </div>
   </div>
+</div>  
 </template>
 
 <script>
-// challenge
-//   - attach a click handler to the delete (song) button called handleClick
-//   - inside the function, use the updateDoc function to delete that song
-//   - you'll need to pass the song id into the handleClick function
-//   - HINT: use the filter method
-
 import AddSong from '@/components/AddSong.vue'
 import useStorage from '@/composables/useStorage'
 import useDocument from '@/composables/useDocument'
@@ -66,12 +68,12 @@ export default {
       router.push({ name: 'Home' })
     }
 
-    const handleClick = async (id) => {
+    const handelClick = async (id) => {
       const songs = playlist.value.songs.filter((song) => song.id != id)
-      await updateDoc({ songs })
+      await updateDoc ({songs})
     }
 
-    return { error, playlist, ownership, handleDelete, handleClick }
+    return { error, playlist, ownership, handleDelete, handelClick }
   }
 }
 </script>

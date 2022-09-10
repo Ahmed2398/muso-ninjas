@@ -1,6 +1,8 @@
 <template>
-  <form @submit.prevent="handleSubmit">
-    <h3>Sign up</h3>
+<div class="container">
+  <div class="row">
+ <form @submit.prevent="handleSubmit">
+    <h3>Signup 📝</h3>
     <input type="text" placeholder="Display name" v-model="displayName">
     <input type="email" placeholder="Email" v-model="email">
     <input type="password" placeholder="Password" v-model="password">
@@ -8,6 +10,9 @@
     <button v-if="!isPending">Sign up</button>
     <button v-if="isPending" disabled>Loading</button>
   </form>
+  </div>
+</div>
+ 
 </template>
 
 <script>
@@ -16,19 +21,24 @@ import useSignup from '@/composables/useSignup'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+
 export default {
   setup() {
     const { error, signup, isPending } = useSignup()
-    const router = useRouter()
 
     const email = ref('')
     const password = ref('')
     const displayName = ref('')
 
+    const router = useRouter()
+ 
+
     const handleSubmit = async () => {
       const res = await signup(email.value, password.value, displayName.value)
       if (!error.value) {
+        console.log('user signed up')
         router.push({ name: 'UserPlaylists' })
+
       }
     }
 

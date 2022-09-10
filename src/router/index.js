@@ -6,13 +6,13 @@ import CreatePlaylist from '../views/playlists/CreatePlaylist.vue'
 import PlaylistDetails from '../views/playlists/PlaylistDetails.vue'
 import UserPlaylists from '../views/playlists/UserPlaylists.vue'
 
-// route guard
-import { projectAuth } from '../firebase/config';
+// route Guard
+import { projectAuth } from '@/firebase/config'
 
 const requireAuth = (to, from, next) => {
   let user = projectAuth.currentUser
   if (!user) {
-    next({ name: 'Login' })
+    next({name: 'login'})
   } else {
     next()
   }
@@ -21,32 +21,32 @@ const requireAuth = (to, from, next) => {
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
     component: Home,
     beforeEnter: requireAuth
   },
   {
-    path: '/login',
-    name: 'Login',
+    path:'/login',
+    name:'login',
     component: Login
   },
   {
     path: '/signup',
-    name: 'Signup',
+    name: 'signup',
     component: Signup
   },
   {
-    path: '/playlists/create',
+    path: '/playlist/create',
     name: 'CreatePlaylist',
     component: CreatePlaylist,
     beforeEnter: requireAuth
   },
   {
-    path: '/playlists/:id',
-    name: 'PlaylistDetails',
+    path:'/playlists/:id',
+    name:'PlaylistDetails',
     component: PlaylistDetails,
-    props: true,
     beforeEnter: requireAuth,
+    props: true
   },
   {
     path: '/playlists/user',
@@ -54,6 +54,7 @@ const routes = [
     component: UserPlaylists,
     beforeEnter: requireAuth
   }
+  
 ]
 
 const router = createRouter({

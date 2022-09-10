@@ -1,48 +1,61 @@
 <template>
-  <div class="navbar">
-    <nav>
-      <img src="@/assets/ninja.png"/>
-      <h1><router-link :to="{ name: 'Home' }">Muso Ninjas</router-link></h1>
+<nav class="navbar navbar-expand-lg navbar-light ">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"> <img src="@/assets/ninja.png"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="links">
-        <div v-if="user">
-          <router-link :to="{ name: 'CreatePlaylist' }">Create Playlist</router-link>
-          <router-link :to="{ name: 'UserPlaylists' }">My Playlists</router-link>
-          <span>Hi there, {{ user.displayName }}</span>
-          <button @click="handleClick">Logout</button>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <div class="links">
+            <div v-if="user">
+              <span>
+                 <router-link class="text-dark my-5" :to="{name: 'home'}">Home 🏡</router-link>
+                </span>
+              <span>
+                 <router-link class="text-dark my-5" :to="{name: 'CreatePlaylist'}">Create PlayList 🎶</router-link>
+                </span>
+               <span>
+              <router-link class="text-dark" :to="{name: 'UserPlaylists'}">My PlayLists 🎼</router-link>
+
+               </span>
+              <span>Hi there, {{user.displayName}} 👋 </span>
+              <button @click="handelClick">Logout 🔐</button>
+            </div>
+            <div v-else="!user">
+            <router-link class="btn" :to="{name: 'login'}">Login 🔑🔓</router-link>
+            <router-link class="btn" :to="{name: 'signup'}">Signup 📝</router-link>
+            </div>
         </div>
-        <div v-else>
-          <router-link class="btn" :to="{ name: 'Signup' }">Signup</router-link>
-          <router-link class="btn" :to="{ name: 'Login' }">Login</router-link>
-        </div>
+          </ul>
       </div>
-    </nav>
+    </div>
   </div>
+</nav>
 </template>
 
 <script>
-// challenge
-//   - only show the logout button if we are logged in
-//   - only show the signup and login links if we are not logged in
-//   - use the getUser composable to help
+import useLogout from '@/composables/useLogout'
+import getUser from '@/composables/getUser'
 
-import getUser from '../composables/getUser'
-import useLogout from '../composables/useLogout'
-import { useRouter } from 'vue-router'
+import {useRouter} from 'vue-router'
 
 export default {
-  setup() {
-    const { user } = getUser()
-    const { logout } = useLogout()
+setup(){
+    const { error, logout, isPending} = useLogout()
+    const {user} = getUser()
+
     const router = useRouter()
 
-    const handleClick = async () => {
-      await logout()
-      console.log('logged out')
-      router.push({ name: 'Login' })
-    }
-
-    return { handleClick, user }
-  }
+    const handelClick = (async () => {
+        await logout () 
+        if(!error.value)
+     console.log('user logged out')
+     router.push({name: 'home'})
+    })
+    return {error, logout, isPending, user , handelClick}
+}
 }
 </script>
 
@@ -50,7 +63,7 @@ export default {
   .navbar {
     padding: 16px 10px;
     margin-bottom: 60px;
-    background: white;
+    background: transparent;
   }
   nav {
     display: flex;
@@ -71,8 +84,10 @@ export default {
     margin-left: 16px;
     font-size: 14px;
   }
-  span {
+
+   span {
     font-size: 14px;
+    font-weight:800 ;
     display: inline-block;
     margin-left: 16px;
     padding-left: 16px;
