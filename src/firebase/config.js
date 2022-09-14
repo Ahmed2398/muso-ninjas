@@ -18,6 +18,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 // init services
+// asm DB (projectFirestore)
 const projectFirestore = firebase.firestore()
 const projectAuth = firebase.auth()
 const projectStorge = firebase.storage()

@@ -21,6 +21,9 @@ body {
 a {
   text-decoration: none;
 }
+img{
+  width: 100% !important;
+}
 
 /* buttons */
 button, .btn { 
